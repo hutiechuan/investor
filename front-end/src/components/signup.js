@@ -4,116 +4,98 @@ import '../App.css'
 export default class Signup extends Component {
   constructor(props) {
     super(props);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.saveTutorial = this.saveTutorial.bind(this);
-    this.newTutorial = this.newTutorial.bind(this);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangeEmail= this.onChangeEmail.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
+    this.saveUser = this.saveUser.bind(this);
+    this.newUser= this.newUser.bind(this);
     this.state = {
       id: null,
-      title: "",
-      description: "", 
-      published: false,
-      submitted: false
+      username: "",
+      email: "",
+      password: ""
     };
   }
-  onChangeTitle(e) {
+  onChangeUsername(e) {
     this.setState({
-      title: e.target.value
+      username: e.target.value
     });
   }
-  onChangeDescription(e) {
+  onChangeEmail(e) {
     this.setState({
-      description: e.target.value
+      email: e.target.value
     });
   }
-  saveTutorial() {
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value
+    });
+  }
+  saveUser() {
     var data = {
-      title: this.state.title,
-      description: this.state.description
+      username: this.state.username,
+      email: this.state.email,
+      password: this.state.password
     };
+    console.log(data);
     TutorialDataService.create(data)
       .then(response => {
         this.setState({
-          id: response.data.id,
-          title: response.data.title,
-          description: response.data.description,
-          published: response.data.published,
-          submitted: true
+          id: null,
+          username: "",
+          email: "",
+          password: ""
         });
-        console.log(response.data);
+        //console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
   }
-  newTutorial() {
+  newUser() {
     this.setState({
       id: null,
-      title: "",
-      description: "",
-      published: false,
-      submitted: false
+      username: "",
+      email: "",
+      password: ""
     });
   }
   
   render() {
     return (
-    
       <div className="text-center m-5-auto">
       <h2>Join us</h2>
       <h5>Create your personal account</h5>
-      <form action="/home">
+      <form>
           <p>
               <label>Username</label><br/>
-              <input type="text" name="first_name" required />
+              <input type="text" 
+                id = "username"
+                name="username"
+                value={this.state.username}
+                onChange={this.onChangeUsername}
+                required />
           </p>
           <p>
               <label>Email address</label><br/>
-              <input type="email" name="email" required />
+              <input type="email" name="email"
+                id = "email"
+                value={this.state.email}
+                onChange={this.onChangeEmail}
+                required />
           </p>
           <p>
               <label>Password</label><br/>
-              <input type="password" name="password" requiredc />
+              <input type="password" name="password"
+                value={this.state.password}
+                onChange={this.onChangePassword}
+               required />
           </p>
           <p>
-              <input type="checkbox" name="checkbox" id="checkbox" required /> <span>I agree all statements in <a href="https://google.com" target="_blank" rel="noopener noreferrer">terms of service</a></span>.
-          </p>
-          <p>
-              <button id="sub_btn" type="submit">Register</button>
+              <button id="sub_btn" type="button" onClick={this.saveUser}>Register</button>
           </p>
       </form>
-      
-  </div>
-
-
-
-
-
-
-
-
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      </div>
     );
   }
   
