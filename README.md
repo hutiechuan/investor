@@ -2,8 +2,6 @@
 
 Node.js PostgreSQL CRUD with Express Rest APIs
 
-Node.js PostgreSQL CRUD with Express Rest APIs
-
 We will build Rest Apis that can create, retrieve, update, delete and find Tutorials by title.
 
 The following table shows overview of the Rest APIs that will be exported:
