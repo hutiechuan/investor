@@ -157,7 +157,7 @@ input {
   border: none
 }
 
-#sub_btn {
+button {
   display: block;
   width: 100%;
   padding: .3rem;
@@ -167,10 +167,22 @@ input {
   border-radius: 3px;
 }
 
-#sub_btn:hover {
+button:hover {
   background: #333;
   transition: all .5s
 }
+
+a.button {
+  display: block;
+  width: 100%;
+  padding: .3rem;
+  border: none;
+  background: #222;
+  color: #fff;
+  border-radius: 3px;
+  text-decoration: none;
+}
+
 
 footer p {
   margin: 0;
