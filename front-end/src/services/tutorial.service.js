@@ -1,7 +1,10 @@
 import http from "../http-common";
 class TutorialDataService {
+  signIn(data) {
+    return http.post("/user/signin", data)
+  }
   getAll() {
-    return http.get("/tutorials");
+    return http.post("/user");
   }
   get(id) {
     return http.get(`/tutorials/${id}`);
