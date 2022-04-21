@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TutorialDataService from "../services/tutorial.service";
 import { Link } from "react-router-dom";
+
 export default class TutorialsList extends Component {
   constructor(props) {
     super(props);
@@ -10,6 +11,7 @@ export default class TutorialsList extends Component {
     this.setActiveTutorial = this.setActiveTutorial.bind(this);
     this.removeAllTutorials = this.removeAllTutorials.bind(this);
     this.searchTitle = this.searchTitle.bind(this);
+
     this.state = {
       tutorials: [],
       currentTutorial: null,
@@ -17,15 +19,19 @@ export default class TutorialsList extends Component {
       searchTitle: ""
     };
   }
+
   componentDidMount() {
     this.retrieveTutorials();
   }
+
   onChangeSearchTitle(e) {
     const searchTitle = e.target.value;
+
     this.setState({
       searchTitle: searchTitle
     });
   }
+
   retrieveTutorials() {
     TutorialDataService.getAll()
       .then(response => {
@@ -38,6 +44,7 @@ export default class TutorialsList extends Component {
         console.log(e);
       });
   }
+
   refreshList() {
     this.retrieveTutorials();
     this.setState({
@@ -45,12 +52,14 @@ export default class TutorialsList extends Component {
       currentIndex: -1
     });
   }
+
   setActiveTutorial(tutorial, index) {
     this.setState({
       currentTutorial: tutorial,
       currentIndex: index
     });
   }
+
   removeAllTutorials() {
     TutorialDataService.deleteAll()
       .then(response => {
@@ -61,7 +70,13 @@ export default class TutorialsList extends Component {
         console.log(e);
       });
   }
+
   searchTitle() {
+    this.setState({
+      currentTutorial: null,
+      currentIndex: -1
+    });
+
     TutorialDataService.findByTitle(this.state.searchTitle)
       .then(response => {
         this.setState({
@@ -73,8 +88,10 @@ export default class TutorialsList extends Component {
         console.log(e);
       });
   }
+
   render() {
     const { searchTitle, tutorials, currentTutorial, currentIndex } = this.state;
+
     return (
       <div className="list row">
         <div className="col-md-8">
@@ -99,6 +116,7 @@ export default class TutorialsList extends Component {
         </div>
         <div className="col-md-6">
           <h4>Tutorials List</h4>
+
           <ul className="list-group">
             {tutorials &&
               tutorials.map((tutorial, index) => (
@@ -114,6 +132,7 @@ export default class TutorialsList extends Component {
                 </li>
               ))}
           </ul>
+
           <button
             className="m-3 btn btn-sm btn-danger"
             onClick={this.removeAllTutorials}
@@ -143,6 +162,7 @@ export default class TutorialsList extends Component {
                 </label>{" "}
                 {currentTutorial.published ? "Published" : "Pending"}
               </div>
+
               <Link
                 to={"/tutorials/" + currentTutorial.id}
                 className="badge badge-warning"
@@ -160,5 +180,4 @@ export default class TutorialsList extends Component {
       </div>
     );
   }
-  
 }

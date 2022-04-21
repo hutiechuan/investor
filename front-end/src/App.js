@@ -7,6 +7,7 @@ import Tutorial from "./components/tutorial.component";
 import TutorialsList from "./components/tutorials-list.component";
 import Login from "./components/Login";
 import Signup from "./components/signup";
+import Dashboard from "./components/dashboard"
 
 class App extends Component {
   render() {
@@ -46,6 +47,8 @@ class App extends Component {
             <Route exact path="/tutorials/:id" element={<Tutorial/>} />
             <Route exact path= "/login" element={<Login/>} />
             <Route exact path= "/signup" element={<Signup/>} />
+            <Route exact path= "/dashboard" element={<Dashboard/>} />
+
         </Routes>
 
         </div>

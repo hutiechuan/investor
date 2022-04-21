@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
 
-require("./app/routes/user.routes.js")(app);
+require("./app/routes/tutorial.routes")(app);
 
 // set port, listen for requestss
 
