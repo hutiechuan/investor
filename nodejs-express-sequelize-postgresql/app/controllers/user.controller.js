@@ -1,14 +1,15 @@
 const db = require("../models");
 const User = db.user;
 const Op = db.Sequelize.Op;
+var bcrypt = require("bcryptjs");
 // Create and Save a new Tutorial
-exports.create = (req, res) => {
+exports.signup = (req, res) => {
     
       // Create a Tutorial
       const user = {
         Email: req.body.email,
         Username: req.body.username,
-        Password: req.body.password 
+        Password: bcrypt.hashSync(req.body.password, 8) 
       };
 
       User.create(user)
@@ -24,23 +25,50 @@ exports.create = (req, res) => {
   
 };
 
+exports.signin = (req, res) => {
+  User.findOne({
+    where: {
+      Username: req.body.username
+    }
+  })
+    .then(user => {
+      if (!user) {
+        return res.status(404).send("User Not found.");
+      }
 
+      var passwordIsValid = bcrypt.compareSync(
+        req.body.password,
+        user.Password
+      );
 
-exports.findAll = (req, res) => {
-    const email = req.query.email;
-    var condition = Email ? { Email: { [Op.iLike]: `%${email}%` } } : null;
-    User.findAll({ where: condition })
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving tutorials."
-        });
-      });
+      if (!passwordIsValid) {
+        return res.status(401).send("Invalid Password!");
+      }
 
+      res.status(200).send(user);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send(err.message);
+    });
 };
+
+
+// exports.findAll = (req, res) => {
+//     const email = req.query.email;
+//     var condition = Email ? { Email: { [Op.iLike]: `%${email}%` } } : null;
+//     User.findAll({ where: condition })
+//       .then(data => {
+//         res.send(data);
+//       })
+//       .catch(err => {
+//         res.status(500).send({
+//           message:
+//             err.message || "Some error occurred while retrieving tutorials."
+//         });
+//       });
+// 
+// };
 
 
 // exports.findOne = (req, res) => {

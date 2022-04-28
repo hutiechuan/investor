@@ -14,7 +14,8 @@ export default class Signup extends Component {
       username: "",
       email: "",
       password: "",
-      submitted: false
+      submitted: false,
+      message: ""
     };
   }
   onChangeUsername(e) {
@@ -46,12 +47,16 @@ export default class Signup extends Component {
           username: "",
           email: "",
           password: "",
-          submitted: true
+          submitted: true,
+          message: ""
         });
         //console.log(response.data);
       })
       .catch(e => {
         console.log(e);
+        this.setState({
+          message: "Username/Email duplicate!" 
+        });
       });
   }
   newUser() {
@@ -82,6 +87,7 @@ export default class Signup extends Component {
           <h2>Join us</h2>
           <h5>Create your personal account</h5>
           <form>
+          {this.state.message ? <p className="alert alert-danger" role="alert"> {this.state.message}</p> : ""}
               <p>
                   <label>Username</label><br/>
                   <input type="text" 

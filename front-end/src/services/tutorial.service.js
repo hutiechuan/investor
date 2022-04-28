@@ -7,7 +7,10 @@ class TutorialDataService {
     return http.get(`/tutorials/${id}`);
   }
   create(data) {
-    return http.post("/user", data);
+    return http.post("/signup", data);
+  }
+  signin(data) {
+    return http.post("/signin", data);
   }
   update(id, data) {
     return http.put(`/tutorials/${id}`, data);
